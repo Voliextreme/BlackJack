@@ -1,0 +1,61 @@
+.page{
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("../../../assets/Images/background.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.player, .dealer{
+    position: relative;
+    width: 100%;
+    height: 50%;
+
+}
+.player img, .dealer img{
+    top: 50%;
+    position: absolute;
+    height: 60%; 
+    transform: translate(-50%, -50%);
+}
+.player img:nth-of-type(1), .dealer img:nth-of-type(1){
+    z-index: 5;
+    left: 42%;
+}
+.player img:nth-of-type(2), .dealer img:nth-of-type(2){
+    z-index: 4;
+    left: 46%;
+}
+.player img:nth-of-type(3), .dealer img:nth-of-type(3){
+    z-index: 3;
+    left: 50%;
+}
+.player img:nth-of-type(4), .dealer img:nth-of-type(4){
+    z-index: 2;
+    left: 54%;
+}
+.player img:nth-of-type(5), .dealer img:nth-of-type(5){
+    z-index: 1;
+    left: 58%;
+}
+
+.chips{
+    width: 30%;
+    height: 15%;
+    position: absolute;
+    top: 85%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.chips img{
+    width: 20%;
+}
+
