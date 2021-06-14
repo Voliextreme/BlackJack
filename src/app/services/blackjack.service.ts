@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Deckinit } from '../class/deckinit';
 
 @Injectable({
   providedIn: 'root'
@@ -8,13 +9,16 @@ export class BlackjackService {
 
   constructor(private httpAsk : HttpClient) { }
 
+  linkdeck ="https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1";
 
-  link = "https://deckofcardsapi.com/api/deck/gfza4vr5iw4n/draw/?count=10"
+  getdeck(){
+    return this.httpAsk.get(this.linkdeck)
+  }
 
-
-  getDecks(){
-    return this.httpAsk.get(this.link);
-  };
+  getCards(deckid : string){
+    let link = "https://deckofcardsapi.com/api/deck/"+ deckid +"/draw/?count=10";
+    return this.httpAsk.get(link);
+  }
 
 }
 
