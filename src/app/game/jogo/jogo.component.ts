@@ -49,8 +49,10 @@ export class JogoComponent implements OnInit {
   // Verificar se é necessario
   @ViewChild('dealer') dealer : any;
   @ViewChild('player') player : any;
-  cartas2 = [];
 
+  @ViewChild('startdiv') startdiv : any;
+
+  cartas2 = [];
   deckid ?: Deckinit
 
   start(){
@@ -78,11 +80,8 @@ export class JogoComponent implements OnInit {
   pontosDealer = 0;
 
   verificar(){
-    console.log("aqui");
     if (this.pontosPlayer > 21) {
       return 'loser'
-    } else if (this.contador == 10 && this.pontosPlayer < 22) {
-      return 'winner'
     } else if (this.pontosPlayer <= 21 && this.pontosDealer <= 21 && this.pontosPlayer > this.pontosDealer) {
       return 'winner'
     } else if (this.pontosPlayer == this.pontosDealer) {
@@ -99,20 +98,28 @@ export class JogoComponent implements OnInit {
     return "0";
   }
 
+  showChips : boolean = false;
+  play(){
+    this.showChips = true;
+    this.startdiv.nativeElement.style.display = "none";
+    this.start();
+    this.givecards();
+
+  }
 
   @ViewChild('decisao') decisao : any;
-
   givecards(){
+    
     if(this.contador != 3){
       this.cartas2[this.contador].nativeElement.src = this.cartasUso[this.contador].image;
       this.cartas2[this.contador].nativeElement.style.display = "block";
       if(this.contador % 2 == 0){
-        if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 21){
+        if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 22){
           this.cartasUso[this.contador].value = "1";
         }
         this.pontosPlayer += parseInt(this.cartasUso[this.contador].value);
       }else{
-        if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 21){
+        if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 22){
           this.cartasUso[this.contador].value = "1";
         }
         this.pontosDealer += parseInt(this.cartasUso[this.contador].value);
@@ -122,6 +129,7 @@ export class JogoComponent implements OnInit {
         this.givecards();
       }, 600);
     }else {
+      this.cartas2[this.contador].nativeElement.src = "../../../assets/Images/card.png";
       this.cartas2[this.contador].nativeElement.style.display = "block";
       this.decisao.nativeElement.style.display = "flex";
       this.contador++;
@@ -132,7 +140,7 @@ export class JogoComponent implements OnInit {
     if(this.pontosPlayer < 21){
       this.cartas2[this.contador].nativeElement.src = this.cartasUso[this.contador].image;
       this.cartas2[this.contador].nativeElement.style.display = "block";
-      if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 21){
+      if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosPlayer) > 22){
         this.cartasUso[this.contador].value = "1";
       }
       this.pontosPlayer += parseInt(this.cartasUso[this.contador].value);
@@ -156,7 +164,7 @@ dealerCards(){
     if(this.pontosDealer <= 16 && this.pontosDealer < this.pontosPlayer || this.pontosDealer <= 16 && this.pontosDealer == this.pontosPlayer){
       this.cartas2[this.contador].nativeElement.src = this.cartasUso[this.contador].image;
       this.cartas2[this.contador].nativeElement.style.display = "block";
-      if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosDealer) > 21){
+      if(parseInt(this.cartasUso[this.contador].value) == 11 && (parseInt(this.cartasUso[this.contador].value) + this.pontosDealer) > 22){
         this.cartasUso[this.contador].value = "1";
       }
       this.pontosDealer += parseInt(this.cartasUso[this.contador].value);
@@ -185,32 +193,47 @@ stay(){
 }
 
 teste = 1000;
-aposta : any = 500;
+
 fim(verify){
+  this.result.nativeElement.style.display = "flex";
   if(verify == "winner"){
-    this.result.nativeElement.style.display = "flex";
-    this.saldo.Playersaldo += this.aposta
+    this.h1.nativeElement.textContent ="Winner";
+    this.saldo.Playersaldo.saldo += this.aposta
   }else if(verify == "loser"){
-    this.result.nativeElement.style.display = "flex";
     this.h1.nativeElement.textContent ="Lose";
     this.aposta -= 2*this.aposta;
-    this.saldo.Playersaldo += this.aposta
+    this.saldo.Playersaldo.saldo += this.aposta
   }else if(verify == "tie"){
-    this.result.nativeElement.style.display = "flex";
     this.h1.nativeElement.textContent ="Tie";
   }
 }
 
 reset(){
-  this.contador = 0;
-  this.pontosPlayer = 0;
-  this.pontosDealer = 0;
-  this.result.nativeElement.style.display = "none";
-  for (let i = 0; i < 10; i++) {
-   this.cartas2[i].nativeElement.style.display = "none";
-  }
-  this.start();
+  setTimeout(() => {
+    this.contador = 0;
+    this.pontosPlayer = 0;
+    this.pontosDealer = 0;
+    this.stayoption = false;
+    this.aposta = 0;
+    this.result.nativeElement.style.display = "none";
+    for (let i = 0; i < 10; i++) {
+    this.cartas2[i].nativeElement.style.display = "none";
+    }
+    this.startdiv.nativeElement.style.display = "flex";
+    this.decisao.nativeElement.style.display="none";
+    this.showChips = false;
+  }, 600);
+}
 
+aposta : any = 0;
+aumentarAposta(valor : any){
+  if(this.aposta + valor <= this.saldo.Playersaldo.saldo){
+    this.aposta += Number(valor);
+  }
+}
+
+leave(){
+  console.log(this.getSaldo.Playersaldo.saldo);
 }
 
 }

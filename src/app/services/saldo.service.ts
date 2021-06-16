@@ -8,7 +8,9 @@ export class SaldoService {
   constructor() { }
 
   Playersaldo = {
-    saldo : 1000 as number,
+    saldo : 10000,
   }
+
+
 
 }
