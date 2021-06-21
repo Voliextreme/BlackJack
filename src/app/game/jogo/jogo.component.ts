@@ -60,6 +60,7 @@ export class JogoComponent implements OnInit {
     x =>{
      this.deckid = new Deckinit(x);
      this.getDeckCards();
+     console.log(this.deckid)
     })
   }
 
@@ -82,18 +83,18 @@ export class JogoComponent implements OnInit {
   verificar(){
     if (this.pontosPlayer > 21) {
       return 'loser'
-    } else if (this.pontosPlayer <= 21 && this.pontosDealer <= 21 && this.pontosPlayer > this.pontosDealer) {
+    } else if (this.pontosPlayer < 21 && this.pontosDealer < 21 && this.pontosPlayer > this.pontosDealer) {
       return 'winner'
     } else if (this.pontosPlayer == this.pontosDealer) {
       return 'tie'
-    } else if (this.pontosPlayer <= 21 && this.pontosDealer <= 21 && this.pontosPlayer < this.pontosDealer) {
+    } else if (this.pontosPlayer < 21 && this.pontosDealer < 21 && this.pontosPlayer < this.pontosDealer) {
       return 'loser'
     } else if (this.pontosDealer > 21) {
       return 'winner'
     } else if (this.pontosDealer == 21) {
       return 'loser'
     } else if (this.pontosPlayer == 21) {
-      return 'winner'
+      return 'blackjack'
     } 
     return "0";
   }
@@ -145,6 +146,7 @@ export class JogoComponent implements OnInit {
       }
       this.pontosPlayer += parseInt(this.cartasUso[this.contador].value);
       this.contador+=2;
+      /*Verificar se é maior ou igual ou nao -------------------------------------------------------------------------------------------------*/ 
       if(this.pontosPlayer > 21){
         this.contador = 3;
         setTimeout(() => {
@@ -192,8 +194,6 @@ stay(){
   this.dealerCards();
 }
 
-teste = 1000;
-
 fim(verify){
   this.result.nativeElement.style.display = "flex";
   if(verify == "winner"){
@@ -205,6 +205,9 @@ fim(verify){
     this.saldo.Playersaldo.saldo += this.aposta
   }else if(verify == "tie"){
     this.h1.nativeElement.textContent ="Tie";
+  }else if(verify == "blackjack"){
+    this.h1.nativeElement.textContent ="BlackJack";
+    this.saldo.Playersaldo.saldo += 1.5*this.aposta
   }
 }
 
