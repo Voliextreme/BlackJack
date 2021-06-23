@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { Card } from 'src/app/class/card';
 import { Deckinit } from 'src/app/class/deckinit';
 import { BlackjackService } from 'src/app/services/blackjack.service';
@@ -12,13 +13,16 @@ import { SaldoService } from 'src/app/services/saldo.service';
 export class JogoComponent implements OnInit {
   //Importar Serviços 
   saldo : SaldoService
-  constructor(private getDeck: BlackjackService, private getSaldo : SaldoService) { 
+  router: Router;
+  constructor(private getDeck: BlackjackService, private getSaldo : SaldoService, router :Router) { 
     this.saldo = getSaldo;
+    this.router = router;
   }
 
   //Ao abrir a pagina chamar a funçao start() 
   ngOnInit(): void {
     this.start();
+    this.saldo.Playersaldo.saldo = Number(localStorage.getItem("saldo"));
   }
 
   // Apos o onInit esta funçao é executada e guarda os HTMLElemnts num objeto cartas2
@@ -262,7 +266,8 @@ aumentarAposta(valor : any){
 
 // ---------------------------------------------------------------------Alterar -------------------------------- Sair para o menu principal.
 leave(){
-  console.log(this.getSaldo.Playersaldo.saldo);
+  localStorage.setItem("coins", this.saldo.Playersaldo.saldo);
+  this.router.navigate(['/lobby'])
 }
 
 }
