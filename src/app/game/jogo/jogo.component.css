@@ -46,7 +46,7 @@
 }
 
 .chips{
-    width: 20%;
+    width: auto;
     height: 70%;
     position: absolute;
     top: 50%;
@@ -58,7 +58,7 @@
     justify-content: space-evenly;
 }
 .chips img{
-    width: 30%;
+    width: 60%;
 }
 
 .decision{
@@ -80,7 +80,7 @@
 }
 
 .pontos{
-    width: 8%;
+    aspect-ratio: 1/2;
     height: 30%;
     position: absolute;
     top: 45%;
@@ -122,8 +122,8 @@
 
 .start{
     position: absolute;
-    width: 20vw;
-    height: 20vh;
+    aspect-ratio: 1/1;
+    height: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -133,11 +133,75 @@
     z-index: 20;
 }
 .start button {
-    width: 20%;
+    position: relative;
+    width: 80%;
     height: 20%;
     background-color: yellow;
     border-radius: 25px;
     border: 1px solid black;
-    
     color: black;
 }
+
+/* // Extra small devices (portrait phones, less than 576px) */
+@media screen and  (max-width: 769px), screen and (max-height: 700px) {
+    .start button {
+        width: 60%;
+    }
+    .chips img{
+        width: 90%;
+    }
+    *{font-size: 11px;}
+    .pontos{
+        aspect-ratio: 1/3;
+    }
+    .player img, .dealer img{
+        top: 50%;
+        position: absolute;
+        height: 45%;
+    } 
+    .decision svg{
+        width: 18%;
+    }
+  }
+  
+  /* (320x480) Smartphone, Landscape */
+  @media only screen and (min-device-width: 720px) and (max-device-width: 1280px) and (orientation: landscape) {
+    .chips img{
+        width: 80%;
+    }
+    .player img, .dealer img{
+        top: 50%;
+        position: absolute;
+        height: 50%; 
+    }
+    .decision svg{
+        width: 12%;
+    }
+  }
+  
+  
+  /* // Medium devices (tablets, less than 992px) */
+  @media only screen and (min-width:  769.1px) and (max-width: 991.98px){
+    .chips img{
+        width: 60%;
+    }
+    .player img, .dealer img{
+        top: 50%;
+        position: absolute;
+        height: 55%; 
+    }
+  
+  }
+  
+  
+  /* (1024x768) iPad 1 & 2, XGA */
+  @media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+  
+  
+  }
+  
+  
+  /* // Large devices (desktops, less than 1200px) */
+  @media only screen and (min-width: 769px) and (max-width: 1300.98px) {
+  
+  }
